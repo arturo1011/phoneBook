@@ -1,0 +1,100 @@
+<!--
+This is your default homepage.
+For more information, see:
+• https://sailsjs.com/documentation/concepts/views
+• https://sailsjs.com/documentation/concepts/routes
+-->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,600" rel="stylesheet" type="text/css">
+<script src="js/aws-sdk.min.js"></script>
+<script src="js/amazon-cognito.min.js"></script>
+<body>
+
+<script>
+// Initialize the Amazon Cognito credentials provider
+
+var albumBucketName = 'audaciaaudiolibros';
+var bucketRegion = 'us-west-2';
+var IdentityPoolId = 'us-west-2:3e1566c7-2e59-42f8-bc82-eb13524bed27';
+
+AWS.config.update({
+  region: bucketRegion,
+  credentials: new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: IdentityPoolId
+  })
+});
+
+var s3 = new AWS.S3({
+  apiVersion: '2006-03-01',
+  params: {Bucket: albumBucketName}
+});
+
+
+</script>
+
+
+
+
+File Uploaded
+
+<form id="personForm"  name="personForm" method='post' action="/person/uploadPhoto" enctype='multipart/form-data'>
+
+  <input type="file"  name="avatar">
+
+  <button id="submitPhoto" type="submit"></button>
+
+
+</form>
+
+
+
+<script>
+
+$(function()
+{
+   $('#submitPhoto').on('click',function(evt){
+
+        evt.preventDefault();
+        var form=new FormData($("#personForm").get(0));
+
+        $.ajax({
+          url: "/person/uploadPhoto",
+          type: "POST",
+          contentType: 'multipart/form-data',
+/*          enctype:"multipart/form-data",*/
+          data: form,
+/*          contentType:false,*/
+          cache: false,
+          processData: false,
+          success: function(data) {
+            alert("Data Uploaded: ");
+          }
+        });
+    });
+
+  /*$('#avatar').on('change',function(evt){
+
+      var form=new FormData($('#personForm'));
+
+      $.ajax({
+        type: "POST",
+        url: "/person/uploadPhoto",
+        contentType: false,
+        data:form ,
+        enctype:"multipart/form-data",
+        processData: false,
+        success: function () {
+          alert("Data Uploaded: ");
+        }
+      });
+
+  });*!/
+*/
+
+
+});
+
+
+</script>
+
+</body>
+

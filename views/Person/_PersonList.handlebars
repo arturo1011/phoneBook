@@ -1,0 +1,16 @@
+
+<h4>PhoneBook Person List</h4>
+{{#each list}}
+
+  <div data-id='{{this.id}}'
+         class="panel panel-default no-padding person">
+    <div class="panel-body">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="fa fa-trash-o red"></i></button>
+      <img class="img-medium" src={{this.PhotoUrl}}>
+      <label id="FullNameLabel">{{this.FullName}}</label>
+    </div>
+  </div>
+{{/each}}
+
+
